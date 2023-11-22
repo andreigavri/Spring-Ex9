@@ -1,5 +1,6 @@
 package com.sda.springex9;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,18 @@ public class FileDataController {
         FileData result = fileDataRepository.save(fileData);
         URI location= new URI("/api/files-data/"+result.getId());
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void getFileById(@PathVariable UUID id,@RequestBody FileData fileData){
+        FileData object= fileDataRepository.findById(id).orElseThrow(()-> new RuntimeException("File not found"));
+        object.setFileName(fileData.getFileName());
+        object.setExtension(fileData.getExtension());
+        object.setSizeInKb(fileData.getSizeInKb());
+        object.setContent(fileData.getContent());
+        fileDataRepository.save(object);
+
     }
 }
 
