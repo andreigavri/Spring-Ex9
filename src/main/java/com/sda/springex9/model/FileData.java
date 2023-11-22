@@ -1,4 +1,4 @@
-package com.sda.springex9;
+package com.sda.springex9.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
