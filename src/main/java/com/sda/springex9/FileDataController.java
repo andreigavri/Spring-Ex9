@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
+
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+
+
 import java.util.UUID;
 
 @RestController
@@ -51,6 +51,13 @@ public class FileDataController {
         object.setContent(fileData.getContent());
         fileDataRepository.save(object);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteFile(@PathVariable UUID id){
+        FileData object= fileDataRepository.findById(id).orElseThrow(()-> new RuntimeException("File not found"));
+        fileDataRepository.deleteById(id);
     }
 }
 
